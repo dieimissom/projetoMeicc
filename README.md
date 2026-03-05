@@ -26,14 +26,12 @@ Ass.:
 Dieimissom C.
 
 A SEGUIR, HAVERÁ FOTOS DAS PÁGINAS:
-
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/2558a7c3-5134-47c1-b8d1-ecc37b0f5423" width="400"/>
-  <img src="https://github.com/user-attachments/assets/e6682a85-431d-4177-b19c-b465d3b038ac" width="400"/>
+  <img src="https://github.com/user-attachments/assets/fc9ff2c1-5781-4ff6-9277-a12620324700" width="45%"/>
+  <img src="https://github.com/user-attachments/assets/e6682a85-431d-4177-b19c-b465d3b038ac" width="45%"/>
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/cdb87300-dce5-49d5-a0f4-35422e7f67c9" width="400"/>
-  <img src="https://github.com/user-attachments/assets/a2397379-fb97-4e42-9d96-f05eaee24125" width="400"/>
+  <img src="https://github.com/user-attachments/assets/cdb87300-dce5-49d5-a0f4-35422e7f67c9" width="45%"/>
+  <img src="https://github.com/user-attachments/assets/a2397379-fb97-4e42-9d96-f05eaee24125" width="45%"/>
 </p>
-
