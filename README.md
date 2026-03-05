@@ -27,8 +27,8 @@ Dieimissom C.
 
 A SEGUIR, HAVERÁ FOTOS DAS PÁGINAS:
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/fc9ff2c1-5781-4ff6-9277-a12620324700" height = "45%" width="45%"/>
-  <img src="https://github.com/user-attachments/assets/e6682a85-431d-4177-b19c-b465d3b038ac" height = "45%" width="45%"/>
+  <img src="https://github.com/user-attachments/assets/fc9ff2c1-5781-4ff6-9277-a12620324700" height = "400px" width="45%"/>
+  <img src="https://github.com/user-attachments/assets/e6682a85-431d-4177-b19c-b465d3b038ac" height = "400px" width="45%"/>
 </p>
 
 <p align="center">
