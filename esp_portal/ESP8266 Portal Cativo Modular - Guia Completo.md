@@ -1,295 +1,280 @@
-ESP8266 Portal Cativo Modular
-Introdução
+# ESP8266 Portal Cativo Modular - Guia Completo
 
-Este projeto implementa um portal cativo educativo utilizando um ESP8266. A ideia principal é demonstrar como funcionam redes que exigem login antes de liberar acesso à internet, algo comum em aeroportos, hotéis ou redes públicas.
+## Introdução
 
-Para isso, o sistema utiliza o SPIFFS (SPI Flash File System) para armazenar e servir páginas HTML diretamente da memória flash do microcontrolador. Dessa forma, o ESP8266 consegue hospedar páginas web simples sem depender de um servidor externo.
+Este projeto implementa um portal cativo educativo para ESP8266 utilizando uma arquitetura modular com separação de responsabilidades. O sistema utiliza SPIFFS (SPI Flash File System) para servir páginas HTML estáticas e foi projetado especificamente para maximizar a exibição da notificação "Fazer login na rede Wi-Fi" em dispositivos clientes.
 
-O projeto foi organizado de forma modular, separando as principais responsabilidades em diferentes arquivos. Isso ajuda bastante na organização do código e facilita tanto a manutenção quanto futuras melhorias.
+A arquitetura modular separa as funcionalidades em diferentes módulos: servidor web (`web_server.h/cpp`), sistema de histórico (`history_system.h/cpp`) e arquivo principal (`esp_portal.ino`). Esta abordagem facilita a manutenção, extensão e depuração do código.
 
-Os módulos principais são:
+## Estrutura do Projeto
 
-Servidor web (web_server.h / web_server.cpp)
-
-Sistema de histórico de dispositivos (history_system.h / history_system.cpp)
-
-Arquivo principal do projeto (esp_portal.ino)
-
-Essa divisão deixa o projeto mais fácil de entender e modificar.
-
-Estrutura do Projeto
+```
 projeto_esp8266_modular/
 ├── esp_portal.ino          # Arquivo principal do Arduino
 ├── web_server.h            # Cabeçalho do servidor web
 ├── web_server.cpp          # Implementação do servidor web
 ├── history_system.h        # Cabeçalho do sistema de histórico
 ├── history_system.cpp      # Implementação do sistema de histórico
-├── data/                   # Pasta com arquivos do SPIFFS
-│   ├── index.html          # Página principal
-│   ├── aviso.html          # Página de aviso
-│   └── admin.html          # Painel administrativo
-└── README.md               # Documentação do projeto
-Principais Características
+├── data/                   # Pasta para arquivos SPIFFS
+│   ├── index.html         # Página principal do portal
+│   ├── aviso.html         # Página de aviso de segurança
+│   └── admin.html         # Painel administrativo
+└── README.md              # Este arquivo
+```
 
-Algumas funcionalidades importantes do projeto:
+## Características Principais
 
-Arquitetura modular para facilitar manutenção e organização
+- **Arquitetura Modular**: Código organizado em módulos específicos para facilitar manutenção
+- **Portal Cativo Otimizado**: Configuração específica para maximizar a detecção de portal cativo
+- **Sistema SPIFFS**: Armazenamento de páginas web no sistema de arquivos flash
+- **Monitoramento de Dispositivos**: Rastreamento em tempo real de dispositivos conectados
+- **Interface Responsiva**: Páginas otimizadas para dispositivos móveis e desktop
+- **Autenticação Admin**: Acesso protegido ao painel administrativo
 
-Portal cativo otimizado para aumentar a chance de aparecer a notificação de login nos dispositivos
+## Configuração de Rede Otimizada
 
-Uso de SPIFFS para armazenar páginas web diretamente na memória do ESP8266
+O projeto utiliza a configuração de IP `8.8.8.8` tanto para o gateway quanto para o IP local do ESP8266. Esta configuração específica foi escolhida para maximizar a probabilidade de acionamento da notificação "Fazer login na rede Wi-Fi" em dispositivos clientes.
 
-Monitoramento de dispositivos conectados
-
-Interface web responsiva, funcionando tanto em celular quanto em computador
-
-Área administrativa protegida
-
-Configuração de Rede
-
-Uma curiosidade do projeto é a configuração de IP utilizada.
-
+```cpp
 IPAddress local_IP(8, 8, 8, 8);
 IPAddress gateway(8, 8, 8, 8);
 IPAddress subnet(255, 255, 255, 0);
+```
 
-Esse endereço foi escolhido porque 8.8.8.8 é um servidor DNS público muito conhecido (Google DNS).
+Esta configuração funciona porque muitos sistemas operacionais tentam acessar servidores DNS públicos conhecidos (como 8.8.8.8 do Google) para verificar a conectividade com a internet. Quando essas requisições são interceptadas pelo ESP8266, o sistema operacional detecta a presença de um portal cativo.
 
-Muitos sistemas operacionais usam esse endereço para testar se existe conexão com a internet. Quando o ESP8266 intercepta essas requisições, o sistema entende que existe um portal cativo, exibindo a notificação de login na rede Wi-Fi.
+## Requisitos de Hardware
 
-Requisitos de Hardware
+- **Microcontrolador**: ESP8266 (NodeMCU, Wemos D1 Mini, ou similar)
+- **Memória Flash**: Mínimo 4MB para suporte adequado ao SPIFFS
+- **Conectividade**: Wi-Fi integrado do ESP8266
 
-Para montar o projeto, você vai precisar de:
+## Requisitos de Software
 
-ESP8266 (NodeMCU, Wemos D1 Mini ou equivalente)
+### IDE Arduino
+- **Versão**: Arduino IDE 1.8.19 ou superior (ou Arduino IDE 2.0+)
+- **Placa ESP8266**: Pacote de placas ESP8266 versão 3.0.0 ou superior
 
-Memória flash de pelo menos 4MB
+### Bibliotecas Necessárias
+As seguintes bibliotecas são necessárias e geralmente já estão incluídas no pacote ESP8266:
 
-Conectividade Wi-Fi (já integrada no ESP8266)
+- `ESP8266WiFi.h` - Gerenciamento de conectividade Wi-Fi
+- `ESP8266WebServer.h` - Servidor HTTP
+- `DNSServer.h` - Servidor DNS para redirecionamento
+- `FS.h` - Sistema de arquivos base
+- `SPIFFS.h` - Sistema de arquivos SPIFFS específico
 
-Requisitos de Software
+### Plugin para Upload de Dados
+Para fazer upload dos arquivos da pasta `data` para o SPIFFS:
 
-Arduino IDE 1.8.19 ou superior
-(ou Arduino IDE 2.x)
+1. Baixe o plugin ESP8266 LittleFS Data Upload do repositório oficial
+2. Extraia na pasta `tools` do diretório Arduino
+3. Reinicie a IDE Arduino
+4. O menu "Ferramentas > ESP8266 LittleFS Data Upload" deve aparecer
 
-Pacote de placas ESP8266 versão 3.0 ou superior
+## Instalação e Configuração
 
-Bibliotecas utilizadas:
+### Passo 1: Preparação do Ambiente
 
-ESP8266WiFi.h
+1. Instale o pacote de suporte ESP8266 na IDE Arduino
+2. Configure a placa ESP8266 apropriada
+3. Instale o plugin ESP8266 LittleFS Data Upload
 
-ESP8266WebServer.h
+### Passo 2: Preparação dos Arquivos
 
-DNSServer.h
+1. Crie uma nova pasta para o projeto
+2. Copie todos os arquivos do projeto (.ino, .h, .cpp) para a pasta
+3. Crie uma subpasta chamada `data`
+4. Copie os arquivos HTML para a pasta `data`
 
-FS.h
+### Passo 3: Configuração da Placa
 
-SPIFFS.h
+1. Selecione sua placa ESP8266 em **Ferramentas > Placa**
+2. Configure os parâmetros:
+   - **CPU Frequency**: 80 MHz
+   - **Flash Size**: 4MB (FS:2MB OTA:~1019KB)
+   - **Upload Speed**: 115200
 
-Essas bibliotecas normalmente já vêm incluídas com o pacote ESP8266.
+### Passo 4: Upload do Código
 
-Upload de Arquivos para o SPIFFS
+1. Abra o arquivo `esp_portal.ino` na IDE Arduino
+2. Compile e faça upload do código para o ESP8266
+3. Monitore o Serial para verificar a inicialização
 
-Para enviar os arquivos da pasta data para o ESP8266 é necessário instalar o plugin:
+### Passo 5: Upload dos Arquivos SPIFFS
 
-ESP8266 LittleFS Data Upload
+1. Use **Ferramentas > ESP8266 LittleFS Data Upload**
+2. Aguarde o processo de upload dos arquivos da pasta `data`
+3. Verifique no Monitor Serial se o SPIFFS foi montado com sucesso
 
-Passos básicos:
+## Arquitetura do Sistema
 
-Baixe o plugin no repositório oficial
+### Arquivo Principal (esp_portal.ino)
 
-Extraia na pasta tools do Arduino
+O arquivo principal é responsável pela inicialização do sistema e coordenação dos módulos. Suas principais funções incluem:
 
-Reinicie a IDE
+- Inicialização do sistema serial e SPIFFS
+- Configuração do ponto de acesso Wi-Fi
+- Inicialização do servidor DNS
+- Configuração do servidor web através do módulo `web_server`
+- Loop principal para processamento de requisições
 
-A opção aparecerá em:
+### Módulo Servidor Web (web_server.h/cpp)
 
-Ferramentas → ESP8266 LittleFS Data Upload
-Instalação do Projeto
-1. Preparar o ambiente
+Este módulo encapsula toda a lógica do servidor HTTP, incluindo:
 
-Instale o pacote ESP8266 na Arduino IDE
+- Configuração de rotas e manipuladores
+- Servir arquivos do SPIFFS
+- Redirecionamento para detecção de portal cativo
+- Autenticação para páginas administrativas
+- Manipulação de URLs específicas de detecção de portal cativo
 
-Configure a placa correta
+### Módulo Sistema de Histórico (history_system.h/cpp)
 
-Instale o plugin de upload SPIFFS/LittleFS
+Responsável pelo monitoramento e registro de dispositivos conectados:
 
-2. Organizar os arquivos
+- Estrutura de dados para informações de dispositivos
+- Detecção de novos dispositivos vs. dispositivos conhecidos
+- Geração de páginas HTML para exibição do histórico
+- Atualização contínua da lista de clientes conectados
 
-Crie uma pasta para o projeto
+## Funcionamento do Portal Cativo
 
-Coloque os arquivos .ino, .h e .cpp dentro dela
+### Detecção de Portal Cativo
 
-Crie uma pasta chamada data
+O sistema implementa várias estratégias para maximizar a detecção de portal cativo:
 
-Coloque os arquivos HTML dentro dessa pasta
+1. **Configuração de IP Específica**: Uso do IP 8.8.8.8 para interceptar tentativas de conectividade
+2. **Servidor DNS Universal**: Redirecionamento de todas as consultas DNS para o ESP8266
+3. **URLs de Detecção**: Manipuladores específicos para URLs comuns de detecção de portal cativo
+4. **Redirecionamento Agressivo**: Qualquer requisição não encontrada é redirecionada para a página principal
 
-3. Configuração da placa
+### URLs de Detecção Implementadas
 
-Na Arduino IDE:
+O sistema responde especificamente às seguintes URLs utilizadas por diferentes sistemas operacionais para detectar portais cativos:
 
-CPU Frequency: 80 MHz
-Flash Size: 4MB (FS:2MB OTA:~1019KB)
-Upload Speed: 115200
-4. Upload do firmware
+- `/generate_204` - Usado por Android e Chrome OS
+- `/success.html` - Usado por algumas versões do Windows
+- `/ncsi.txt` - Network Connectivity Status Indicator do Windows
 
-Abra esp_portal.ino
+Todas essas URLs são redirecionadas para a página principal do portal, forçando a detecção.
 
-Compile
+### Fluxo de Redirecionamento
 
-Envie para o ESP8266
+1. Dispositivo conecta à rede "EscolaRS_WiFi"
+2. Sistema operacional tenta verificar conectividade com a internet
+3. Servidor DNS do ESP8266 redireciona todas as consultas para 8.8.8.8
+4. Requisições HTTP são interceptadas e redirecionadas para a página de login
+5. Sistema operacional detecta o portal cativo e exibe a notificação
 
-Observe o Monitor Serial para verificar se tudo iniciou corretamente
+## Páginas Web
 
-5. Upload das páginas
+### index.html - Página Principal
 
-Depois do firmware:
+A página principal simula um portal de login governamental brasileiro com:
 
-Ferramentas → ESP8266 LittleFS Data Upload
+- Design responsivo adaptável a diferentes dispositivos
+- Tema visual baseado no padrão gov.br
+- Formulário de login interativo
+- JavaScript para alternância entre telas
 
-Isso enviará os arquivos HTML para o SPIFFS.
+### aviso.html - Página de Aviso
 
-Arquitetura do Sistema
-Arquivo Principal (esp_portal.ino)
+Página educativa sobre segurança em redes Wi-Fi com:
 
-Esse arquivo inicializa todo o sistema:
+- Design impactante com animações CSS
+- Conteúdo educativo sobre riscos de segurança
+- Links para navegação entre seções
+- Otimização para dispositivos móveis
 
-Inicialização do Serial
+### admin.html - Painel Administrativo
 
-Montagem do SPIFFS
+Interface administrativa moderna com:
 
-Criação da rede Wi-Fi
+- Dashboard com estatísticas em tempo real
+- Tabela de dispositivos conectados
+- Design moderno com gradientes e animações
+- Funcionalidades de atualização automática
 
-Inicialização do servidor DNS
+## Personalização e Extensões
 
-Inicialização do servidor web
+### Modificando Credenciais de Admin
 
-Loop principal de funcionamento
+Para alterar as credenciais de administrador, modifique as variáveis no arquivo principal:
 
-Servidor Web (web_server)
-
-Esse módulo cuida de toda a parte HTTP:
-
-Definição das rotas
-
-Servir páginas HTML
-
-Redirecionamento para o portal cativo
-
-Autenticação do painel administrativo
-
-Sistema de Histórico (history_system)
-
-Responsável por registrar informações sobre os dispositivos conectados:
-
-Identificação de novos dispositivos
-
-Registro de acessos
-
-Geração da página de histórico
-
-Atualização contínua da lista de clientes
-
-Funcionamento do Portal Cativo
-
-Para que o portal seja detectado automaticamente, o sistema utiliza algumas estratégias:
-
-DNS que redireciona todas as consultas
-
-IP específico para interceptar verificações de conectividade
-
-Redirecionamento automático de páginas
-
-URLs de Detecção
-
-Alguns sistemas operacionais verificam URLs específicas para descobrir se existe um portal cativo.
-
-O projeto responde a URLs como:
-
-/generate_204   (Android)
-/success.html   (Windows)
-/ncsi.txt       (Windows)
-
-Todas acabam sendo redirecionadas para a página principal.
-
-Fluxo de Funcionamento
-
-O usuário conecta na rede EscolaRS_WiFi
-
-O dispositivo tenta verificar se existe internet
-
-O DNS redireciona a requisição para o ESP8266
-
-O portal cativo é detectado
-
-O sistema mostra a notificação "Fazer login na rede Wi-Fi"
-
-Páginas do Sistema
-index.html
-
-Simula uma página de login com:
-
-design inspirado no padrão gov.br
-
-layout responsivo
-
-formulário interativo
-
-aviso.html
-
-Página educativa explicando os riscos de redes públicas e boas práticas de segurança.
-
-admin.html
-
-Painel administrativo com:
-
-estatísticas de acessos
-
-lista de dispositivos conectados
-
-interface moderna
-
-Personalização
-Alterar credenciais do admin
-
-No arquivo principal:
-
+```cpp
 const char* admin_username = "seu_usuario";
 const char* admin_password = "sua_senha";
-Alterar nome da rede Wi-Fi
-WiFi.softAP("Seu_Nome_WiFi", "");
-Solução de Problemas
-SPIFFS não monta
+```
 
-verifique se o upload foi feito
+### Adicionando Novas Rotas
 
-confirme o tamanho da flash
+Para adicionar novas rotas ao servidor web, edite a função `setupWebServer` em `web_server.cpp`:
 
-verifique mensagens no Serial
+```cpp
+server.on("/nova_rota", HTTP_GET, [&]() {
+    serveSpiffsFile(server, "/nova_pagina.html", "text/html");
+});
+```
 
-Portal não aparece
+### Modificando o Nome da Rede
 
-esqueça a rede Wi-Fi no dispositivo
+Para alterar o nome da rede Wi-Fi, modifique a chamada `WiFi.softAP` no arquivo principal:
 
-desligue dados móveis
+```cpp
+WiFi.softAP("Seu_Nome_WiFi", ""); // Sem senha para portal cativo
+```
 
-reconecte novamente
+## Solução de Problemas
 
-Páginas não carregam
+### SPIFFS Não Monta
 
-confirme se estão na pasta data
+Se o SPIFFS não montar corretamente:
 
-faça novamente o upload SPIFFS
+1. Verifique se o upload dos dados foi realizado
+2. Confirme a configuração de Flash Size
+3. Monitore mensagens de erro no Serial
 
-Considerações de Segurança
-Uso Educacional
+### Portal Cativo Não Detectado
 
-Este projeto foi criado apenas para fins educacionais, com o objetivo de demonstrar como portais cativos funcionam e como redes públicas podem representar riscos.
+Se a notificação não aparecer:
 
-Ele não deve ser usado para coletar dados reais ou realizar qualquer atividade maliciosa.
+1. Esqueça a rede Wi-Fi no dispositivo cliente
+2. Desative dados móveis temporariamente
+3. Reinicie o dispositivo cliente
+4. Teste com diferentes dispositivos e sistemas operacionais
 
-Conclusão
+### Páginas Não Carregam
 
-Esse projeto demonstra como um ESP8266 pode ser usado para criar um portal cativo funcional, utilizando uma arquitetura organizada e modular.
+Se as páginas não carregarem:
 
-A divisão do código em módulos facilita bastante o desenvolvimento e permite que novas funcionalidades sejam adicionadas com facilidade. Além disso, o uso do SPIFFS torna possível hospedar páginas web diretamente no microcontrolador, sem depender de servidores externos.
+1. Verifique se os arquivos estão na pasta `data`
+2. Confirme se o upload SPIFFS foi bem-sucedido
+3. Monitore o Serial para mensagens de erro
+
+## Considerações de Segurança
+
+### Uso Educativo
+
+Este projeto foi desenvolvido exclusivamente para fins educativos e demonstração de conceitos de segurança. Não deve ser utilizado para interceptar dados reais ou realizar atividades maliciosas.
+
+### Limitações
+
+- O sistema não implementa criptografia real
+- Dados transmitidos não são protegidos
+- Não há autenticação real de usuários
+- O objetivo é demonstrar vulnerabilidades, não explorá-las
+
+### Boas Práticas
+
+- Sempre informe aos usuários que se trata de uma demonstração
+- Use apenas em ambientes controlados e com consentimento
+- Não colete dados pessoais reais
+- Mantenha o foco no aspecto educativo
+
+## Conclusão
+
+Este projeto oferece uma implementação robusta e modular de um portal cativo educativo para ESP8266. A arquitetura modular facilita a manutenção e extensão do código, enquanto a configuração otimizada maximiza as chances de detecção do portal cativo pelos dispositivos clientes.
+
+A separação em módulos específicos permite que desenvolvedores modifiquem ou estendam funcionalidades específicas sem afetar outras partes do sistema. O uso do SPIFFS proporciona flexibilidade na gestão de conteúdo web, permitindo atualizações rápidas das páginas sem recompilação do firmware.
+
