@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escola RS - Estudante</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #FFD700; /* Cor amarela do design */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Para empurrar o footer para baixo */
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1; /* Para ocupar o espaço disponível */
+            text-align: center;
+        }
+        
+        .logo-container {
+            margin-bottom: 40px; /* Espaço entre a logo e o botão */
+        }
+        
+        .logo-container img {
+            width: 250px; /* Ajuste conforme o tamanho da logo na imagem */
+            height: auto;
+            object-fit: contain;
+        }
+        
+        .btn-govbr {
+            display: inline-block;
+            width: 270px;
+            height: 50px; /* Altura maior para o botão */
+            line-height: 50px;
+            background: #0052CC; /* Azul do gov.br */
+            color: #FFF;
+            font-size: 1.1rem; /* Fonte maior */
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 25px; /* Bordas mais arredondadas */
+            box-shadow: 0 4px 8px rgba(0,0,0,.2); /* Sombra mais pronunciada */
+            cursor: pointer;
+            transition: background .2s;
+        }
+        
+        .btn-govbr:hover,
+        .btn-govbr:focus {
+            background: #003A99;
+        }
+        
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            color: #333; /* Cor do texto do footer */
+            font-size: 0.9em;
+            background-color: transparent; /* Fundo transparente para o footer */
+        }
+        
+        footer .link-conhecer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: inherit;
+            margin-bottom: 5px;
+        }
+        
+        footer .link-conhecer .icon {
+            margin-right: 5px;
+        }
+        
+        footer .version {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="logo-container">
+            <img src="/logo.png" alt="Logo Escola RS">
+        </div>
+        <a href="/redirect_to_aviso" class="btn-govbr">
+            Entrar com <strong>gov.br</strong>
+        </a>
+    </div>
+    
+    <footer>
+        <a href="#" class="link-conhecer">
+            <span class="icon">💡</span>
+            Conhecer
+        </a>
+        <div class="version">Escola RS - Estudante 9.0.0</div>
+    </footer>
+</body>
+</html>
+
