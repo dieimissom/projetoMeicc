@@ -26,10 +26,14 @@ Ass.:
 Dieimissom C.
 
 A SEGUIR, HAVERÁ FOTOS DAS PÁGINAS:
-<img width="400" height="400" alt="{2DF066A3-0CC6-4DE3-892E-E30FE2D0DB23}" src="https://github.com/user-attachments/assets/2558a7c3-5134-47c1-b8d1-ecc37b0f5423" />
-<img width="400" height="400" alt="image" src="https://github.com/user-attachments/assets/e6682a85-431d-4177-b19c-b465d3b038ac" />
-<img width="400" height="400" alt="image" src="https://github.com/user-attachments/assets/cdb87300-dce5-49d5-a0f4-35422e7f67c9" />
-<img width="400" height="400" alt="{7F6267F6-8F78-4D93-9735-05A475F75652}" src="https://github.com/user-attachments/assets/a2397379-fb97-4e42-9d96-f05eaee24125" />
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/2558a7c3-5134-47c1-b8d1-ecc37b0f5423" width="400"/>
+  <img src="https://github.com/user-attachments/assets/e6682a85-431d-4177-b19c-b465d3b038ac" width="400"/>
+</p>
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cdb87300-dce5-49d5-a0f4-35422e7f67c9" width="400"/>
+  <img src="https://github.com/user-attachments/assets/a2397379-fb97-4e42-9d96-f05eaee24125" width="400"/>
+</p>
 
